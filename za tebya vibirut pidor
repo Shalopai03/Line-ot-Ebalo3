@@ -1,0 +1,51 @@
+import java.util.Scanner;
+public class Main {
+    static class Node {
+        int value;
+        Node left, right;
+
+        public Node(int value) {
+            this.value = value;
+            left = null;
+            right = null;
+        }
+
+        int printTree(int counter) {
+            if (left != null) {
+                counter = left.printTree(counter);
+            }
+            System.out.print(counter + " узел - " + value + ", ");
+            counter++;
+            if (right != null) {
+                counter = right.printTree(counter);
+            }
+            return counter;
+        }
+    }
+
+    static Node insert(Node root, int value, int counter) {
+        if (root == null) {
+            return new Node(value);
+        } else {
+            if (root.value < value) {
+                root.right = insert(root.right, value, counter);
+            } else {
+                root.left = insert(root.left, value, counter);
+            }
+        }
+        return root;
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Введите количество узлов: ");
+        int n = scanner.nextInt();
+
+        Node root = null;
+        for (int i = 1; i <= n; i++) {
+            root = insert(root, i, 1);
+        }
+
+        root.printTree(1);
+    }
+}
